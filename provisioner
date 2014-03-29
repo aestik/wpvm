@@ -16,7 +16,8 @@ sudo a2enmod rewrite
 sudo service apache2 restart
 
 # download init script
-sudo wget -c https://github.com/aestik/wpvm/raw/master/dbcaretaker -O /etc/init.d/dbcaretaker
+curl -O https://raw.githubusercontent.com/aestik/wpvm/master/dbcaretaker
+sudo mv dbcaretaker /etc/init.d/dbcaretaker
 
 # activate init script
 cd /etc/init.d
