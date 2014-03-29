@@ -8,5 +8,5 @@ Vagrant.configure("2") do |config|
 	config.vm.hostname = "coba-debian"
 	config.vm.synced_folder "./www", "/var/www", owner: "www-data", group: "www-data"
 	config.vm.synced_folder "./db", "/db"
-	config.vm.provision "shell", path: "https://github.com/aestik/wpvm/raw/master/provisioner.sh"
+	config.vm.provision "shell", path: "https://github.com/aestik/wpvm/raw/master/provisioner"
 end
