@@ -25,4 +25,4 @@ sudo chmod +x dbcaretaker
 sudo insserv dbcaretaker
 
 # create WordPress database
-mysql -u root -pmysqlhehehe <<< "create database wordpress;"
+mysql -u root -pmysqlhehehe <<< "CREATE DATABASE IF NOT EXISTS wordpress;"
