@@ -20,6 +20,7 @@ sudo wget -c https://github.com/aestik/wpvm/raw/master/dbcaretaker -O /etc/init.
 
 # activate init script
 cd /etc/init.d
+sudo chmod +x dbcaretaker
 sudo insserv dbcaretaker
 
 # create WordPress database
