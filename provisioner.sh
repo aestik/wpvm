@@ -14,3 +14,13 @@ sudo apt-get install -y unzip php5 php5-curl php5-common php5-gd php5-imagick ph
 # setup apache2 & mysql
 sudo a2enmod rewrite
 sudo service apache2 restart
+
+# download init script
+sudo wget -c https://github.com/aestik/wpvm/raw/master/dbcaretaker.sh -O /etc/init.d/dbcaretaker.sh
+
+# activate init script
+cd /etc/init.d
+sudo insserv mydaemon
+
+# create WordPress database
+mysql -u root -pmysqlhehehe <<< "create database wordpress;"
