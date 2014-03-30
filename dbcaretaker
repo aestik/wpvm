@@ -15,8 +15,6 @@
 case $1 in
 	start)
 		until [ -f /db/wordpress.sql ]; do
-			echo "------ " `date`
-			echo "can't find database file :/"
 			echo "------ " `date` >> /var/log/dbcaretaker.log
 			echo "can't find database file :/" >> /var/log/dbcaretaker.log
 		done
