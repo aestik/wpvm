@@ -25,10 +25,12 @@ cd /etc/init.d
 sudo chmod +x dbcaretaker
 sudo insserv dbcaretaker
 
-
 # create WordPress database
 mysql -u root -pmysqlhehehe <<< "CREATE DATABASE IF NOT EXISTS wordpress;"
 
 # download Search-Replace-DB
 sudo wget -c https://github.com/interconnectit/Search-Replace-DB/archive/master.zip -O /opt/search-replace.zip
 sudo unzip -o /opt/search-replace.zip -d /opt/
+
+# start dbcaretaker
+sudo service dbcaretaker start
