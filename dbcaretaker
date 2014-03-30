@@ -1,6 +1,6 @@
 ### BEGIN INIT INFO
 # Provides:          dbcaretaker
-# Required-Start:    mysql
+# Required-Start:    mysql $ALL
 # Required-Stop:     mysql
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
@@ -14,13 +14,33 @@
 
 case $1 in
 	start)
-		if [ -f /db/wordpress.sql ]
-		then
-			echo "Restore saved database"
-			/usr/bin/mysql -u root -pmysqlhehehe --database wordpress < /db/wordpress.sql;
-		fi
+		until [ -f /db/wordpress.sql ]; do
+			echo "------ " `date`
+			echo "can't find database file :/"
+			echo "------ " `date` >> /var/log/dbcaretaker.log
+			echo "can't find database file :/" >> /var/log/dbcaretaker.log
+		done
+
+		echo "------ " `date` >> /var/log/dbcaretaker.log
+		echo "Restore saved database" >> /var/log/dbcaretaker.log
+		echo "Restore saved database"
+		/usr/bin/mysql -u root -pmysqlhehehe --database wordpress < /db/wordpress.sql;
+
+		OLD=$(echo "SELECT option_value from wp_options WHERE option_name='siteurl'" | mysql -s -r -u root -pmysqlhehehe wordpress)
+		OLD=$(echo $OLD | sed -e "s/http://g")
+
+		NEW=$(hostname -f)
+		NEW=//$NEW
+		echo "change" $OLD
+		echo "with" $NEW
+
+		echo "------ " `date` >> /var/log/dbcaretaker.log
+		/usr/bin/php /opt/Search-Replace-DB-master/srdb.cli.php -h localhost -n wordpress -u root -p mysqlhehehe -s "$OLD" -r "$NEW" >> /var/log/dbcaretaker.log
+
 		;;
 	stop)
+		echo "------ " `date` >> /var/log/dbcaretaker.log
+		echo "Saving database" >> /var/log/dbcaretaker.log
 		echo "Saving database"
 		/usr/bin/mysqldump -u root -pmysqlhehehe wordpress > /db/wordpress.sql;
 		;;
