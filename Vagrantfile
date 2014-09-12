@@ -3,7 +3,7 @@ dir = File.dirname(File.expand_path(__FILE__))
 data = YAML.load_file("#{dir}/host.yaml")
 
 Vagrant.configure("2") do |config|
-	config.vm.box = "chef/debian-7.4"
+	config.vm.box = "ubuntu/trusty64"
 	config.vm.provider "virtualbox" do |vb|
 		vb.customize ["modifyvm", :id, "--memory", data['memory'] ]
 		vb.name = data['hostname']

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# add hhvm repo
+wget -O - http://dl.hhvm.com/conf/hhvm.gpg.key | sudo apt-key add -
+echo deb http://dl.hhvm.com/ubuntu trusty main | sudo tee /etc/apt/sources.list.d/hhvm.list
+
 # before installing
 sudo apt-get update
 sudo apt-get upgrade -y
@@ -9,11 +13,13 @@ sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password pas
 sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_again password mysqlhehehe'
 
 # installing packages
-sudo apt-get install -y unzip php5 php5-curl php5-common php5-gd php5-imagick php5-mcrypt php5-memcache php5-memcached php5-mysql apache2 mysql-server-5.5 mysql-client vim zsh
+sudo apt-get install -y unzip hhvm nginx mysql-server-5.5 mysql-client vim zsh
 
-# setup apache2 & mysql
-sudo a2enmod rewrite
-sudo service apache2 restart
+# setup hhvm
+sudo /usr/share/hhvm/install_fastcgi.sh
+sudo /etc/init.d/hhvm restart
+sudo /etc/init.d/nginx restart
+sudo update-rc.d hhvm defaults
 
 # download init script
 curl -O https://raw.githubusercontent.com/aestik/wpvm/master/dbcaretaker
